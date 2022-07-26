@@ -8,5 +8,34 @@
 </head>
 <body>
     <div class="app"></div>
+
+
+
+
+
+
+    <script>
+        window.application = {
+            blocks: {},
+            screens: {},
+            renderScreen: function(screenName, container) {
+                if(!this.screens[screenName]) {
+                    console.log("Данный запрос не может быть выполнен");
+                } else {
+                    this.screens[screenName](container);
+                };
+            },
+            renderBlock: function(blockName, container) {
+                if(!this.blocks[blockName]) {
+                    console.log("Данный запрос не может быть выполнен");
+                } else {
+                    this.blocks[blockName](container);
+                };
+            },
+            timers: []
+  };  
+    </script>
+    <script src="/src/startPage.js" ></script>
+    <script src="script.js" ></script>
 </body>
 </html>
