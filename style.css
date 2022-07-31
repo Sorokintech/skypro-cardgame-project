@@ -67,6 +67,10 @@
     cursor: pointer;
     transform: scale(1.05);
 }
+.diff-button-active {
+    background-color: #7AC100;
+    color: #fff;
+}
 .start-button {
     background: #7AC100;
     border-radius: 12px;

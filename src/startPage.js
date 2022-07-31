@@ -1,6 +1,3 @@
-const app = document.querySelector('.app');
-
-
 const templateStartPage ={
     tag : 'div',
     cls: 'container',
@@ -38,3 +35,5 @@ const templateStartPage ={
         }
     ]
 };
+
+
