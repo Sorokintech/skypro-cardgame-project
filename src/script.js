@@ -17,22 +17,28 @@ difficultyButtons.forEach((button) => {
   });
 });
 
+// startButton.addEventListener('click', (event) => {
+//   event.preventDefault();
+//   switch (chosenDifficulty) {
+//     case '1':
+//       app.textContent = '';
+//       app.appendChild(templateEngine(templateEasyMode));
+//       break;
+//     case '2':
+//       app.textContent = '';
+//       app.appendChild(templateEngine(templateMediumMode));
+//       break;
+//     case '3':
+//       app.textContent = '';
+//       app.appendChild(templateEngine(templateHardMode));
+//       break;
+//     default:
+//       alert('Сложность не выбрана');
+//   }
+// });
 startButton.addEventListener('click', (event) => {
   event.preventDefault();
-  switch (chosenDifficulty) {
-    case '1':
-      app.textContent = '';
-      app.appendChild(templateEngine(templateEasyMode));
-      break;
-    case '2':
-      app.textContent = '';
-      app.appendChild(templateEngine(templateMediumMode));
-      break;
-    case '3':
-      app.textContent = '';
-      app.appendChild(templateEngine(templateHardMode));
-      break;
-    default:
-      alert('Сложность не выбрана');
-  }
+  app.textContent = '';
+  app.appendChild(templateEngine(templateGamePage));
+  app.classList.remove('center');
 });

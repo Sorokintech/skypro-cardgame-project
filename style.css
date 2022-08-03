@@ -8,6 +8,9 @@
 .app {
   height: 100vh;
   background-color: #004980;
+}
+
+.center {
   display: flex;
   flex-direction: column;
 
@@ -105,5 +108,88 @@
   cursor: pointer;
   transform: scale(1.05);
 }
+
+.container-header-game {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 23px;
+}
+
+.container-header-timer {
+  display: flex;
+  flex-direction: column;
+}
+
+.timer-text {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  color: #fff;
+}
+
+.container-timer-up {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 57px;
+}
+
+.container-timer-down {
+  display: flex;
+  flex-direction: row;
+}
+
+.timer-min,
+.timer-sec,
+.timer-dot {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 52px;
+  display: flex;
+  color: #fff;
+}
+
+.container-cards {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  padding-left: 10px;
+  padding-right: 10px;
+  gap: 15px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 4px;
+  transition: 0.5s;
+}
+
+.card:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+/* .container-cards {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 10px;
+  padding-right: 10px;
+  gap: 15px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 4px;
+  transition: 0.5s;
+}
+
+.card:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+} */
 
 /* .app */

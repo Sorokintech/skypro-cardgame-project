@@ -20,6 +20,7 @@
     "templateStartPage": true,
     "templateEasyMode": true,
     "templateMediumMode": true,
-    "templateHardMode": true
+    "templateHardMode": true,
+    "templateGamePage": true
   }
 }
