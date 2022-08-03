@@ -1,0 +1,38 @@
+{
+  "name": "scp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:js": "eslint ./**/*.js",
+    "lint:css": "stylelint ./**/*.css",
+    "format": "prettier --write ./",
+    "lint": "npm run lint:js && npm run lint:css",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sorokintech/skypro-cardgame-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sorokintech/skypro-cardgame-project/issues"
+  },
+  "homepage": "https://github.com/Sorokintech/skypro-cardgame-project#readme",
+  "dependencies": {
+    "lodash": "4.17.21"
+  },
+  "devDependencies": {
+    "eslint": "8.21.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "husky": "8.0.1",
+    "prettier": "2.7.1",
+    "stylelint": "14.9.1",
+    "stylelint-config-prettier": "9.0.3",
+    "stylelint-config-standard": "26.0.0",
+    "stylelint-prettier": "2.0.0"
+  }
+}

@@ -1,46 +1,43 @@
+function templateEngine(block) {
+  if (block === undefined || block === null || block === false) {
+    return document.createTextNode('');
+  }
+  if (
+    typeof block === 'string' ||
+    typeof block === 'number' ||
+    block === true
+  ) {
+    return document.createTextNode(block);
+  }
+  if (Array.isArray(block)) {
+    const fragment = document.createDocumentFragment();
 
-function templateEngine (block) {
-    if ((block === undefined) || (block === null) || (block === false)) {
-        return document.createTextNode('');
-    }
-    if ((typeof block === 'string') || (typeof block === 'number') || (block === true)) {
-        return document.createTextNode(block);
-    }
-    if (Array.isArray(block)) {
-        const fragment = document.createDocumentFragment();
+    block.forEach((item) => {
+      const el = templateEngine(item);
 
-        block.forEach(item => {
-            const el = templateEngine(item);
+      fragment.appendChild(el);
+    });
 
+    return fragment;
+  }
 
-            fragment.appendChild(el);
+  const element = document.createElement(block.tag);
 
-        });
+  if (block.cls) {
+    element.classList.add(...[].concat(block.cls).filter(Boolean));
+  }
 
-        return fragment;
-    
-    }
-    
-    const element = document.createElement(block.tag);
+  if (block.attrs) {
+    const keys = Object.keys(block.attrs);
 
-    if (block.cls) {
-        element.classList.add(
-            ...[].concat(block.cls).filter(Boolean)
-        );
-    }
+    keys.forEach((key) => {
+      element.setAttribute(key, block.attrs[key]);
+    });
+  }
 
-    if (block.attrs) {
-        const keys = Object.keys(block.attrs);
+  const content = templateEngine(block.content);
 
-        keys.forEach(key => {
-            element.setAttribute (key, block.attrs[key]);
-        });
-    }
+  element.appendChild(content);
 
-    const content = templateEngine(block.content);
-
-    element.appendChild(content);
-
-    return element
-
-};
+  return element;
+}
