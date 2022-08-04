@@ -6,13 +6,13 @@
 }
 
 .app {
-  height: 100vh;
   background-color: #004980;
 }
 
 .center {
   display: flex;
   flex-direction: column;
+  height: 100vh;
 
   /* flex-wrap: wrap; */
   justify-content: center;
@@ -160,6 +160,11 @@
   padding-left: 10px;
   padding-right: 10px;
   gap: 15px;
+  padding-bottom: 50px;
+}
+
+.img {
+  width: 100%;
 }
 
 .card {

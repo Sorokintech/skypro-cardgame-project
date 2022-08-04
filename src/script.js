@@ -36,9 +36,18 @@ difficultyButtons.forEach((button) => {
 //       alert('Сложность не выбрана');
 //   }
 // });
+// TO OPEN THIRD SCREEN
 startButton.addEventListener('click', (event) => {
   event.preventDefault();
   app.textContent = '';
-  app.appendChild(templateEngine(templateGamePage));
+  app.appendChild(templateEngine(templateCardPage));
   app.classList.remove('center');
 });
+
+// TO OPEN SECOND SCREEN
+// startButton.addEventListener('click', (event) => {
+//   event.preventDefault();
+//   app.textContent = '';
+//   app.appendChild(templateEngine(templateGamePage));
+//   app.classList.remove('center');
+// });

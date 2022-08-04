@@ -21,6 +21,8 @@
     "templateEasyMode": true,
     "templateMediumMode": true,
     "templateHardMode": true,
-    "templateGamePage": true
+    "templateGamePage": true,
+    "templateCardPage": true,
+    "app": true
   }
 }
