@@ -23,6 +23,11 @@
     "templateHardMode": true,
     "templateGamePage": true,
     "templateCardPage": true,
-    "app": true
+    "app": true,
+    "cards": true,
+    "randomNumber": true,
+    "currentCardsEasy": true,
+    "currentCardsMedium": true,
+    "currentCardsHard": true
   }
 }
