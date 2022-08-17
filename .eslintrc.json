@@ -21,13 +21,20 @@
     "templateEasyMode": true,
     "templateMediumMode": true,
     "templateHardMode": true,
-    "templateGamePage": true,
-    "templateCardPage": true,
     "app": true,
     "cards": true,
     "randomNumber": true,
     "currentCardsEasy": true,
     "currentCardsMedium": true,
-    "currentCardsHard": true
+    "currentCardsHard": true,
+    "templateLose": true,
+    "templateWin": true,
+    "templateAlert": true,
+    "gameTimer": true,
+    "timerZero": true,
+    "lol": true,
+    "timerGO": true,
+    "stopTime": true,
+    "countingTimer": true
   }
 }

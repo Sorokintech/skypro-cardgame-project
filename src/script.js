@@ -26,85 +26,63 @@ startButton.addEventListener('click', (event) => {
   app.textContent = '';
   if (chosenDifficulty === '1') {
     app.appendChild(templateEngine(templateEasyMode));
-    const cardsRender = document.querySelector('.container-cards');
-    cardsRender.classList.add('easy-one');
-    app.style.height = '100vh';
-    setTimeout(cardFlip, 2000);
+    gamePageLogic(`easy-one`);
   } else if (chosenDifficulty === '2') {
     app.appendChild(templateEngine(templateMediumMode));
-    const cardsRender = document.querySelector('.container-cards');
-    cardsRender.classList.add('easy-one');
-    app.style.height = '100vh';
-    setTimeout(cardFlip, 2000);
+    gamePageLogic(`easy-one`);
   } else if (chosenDifficulty === '3') {
     app.appendChild(templateEngine(templateHardMode));
-    const cardsRender = document.querySelector('.container-cards');
-    cardsRender.classList.add('hard-one');
-    app.style.height = '100vh';
-    setTimeout(cardFlip, 2000);
+    gamePageLogic(`hard-one`);
   } else {
     alert('Выберите сложность');
     location.reload(true);
   }
 });
-
-let matchCard = '';
-function cardFlip() {
-  let images = document.querySelectorAll('.img');
-  images.forEach((e) => {
-    let currentSrc = e.src;
-    e.src = `./src/cards/back-card.png`;
-    e.addEventListener('click', (event) => {
-      e.src = currentSrc;
-      if (matchCard === '') {
-        matchCard = e.src;
-      } else if (matchCard === e.src) {
-        alert('Вы победили');
-        matchCard = '';
-      } else if (matchCard !== e.src) {
-        alert('Вы проиграли');
-        matchCard = '';
-      }
-    });
-  });
+function toggle() {
+  app.classList.toggle('active');
 }
+function insertAfter(newNode, existingNode) {
+  existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
+}
+let matchCard = '';
+const cardsSRC = `./src/cards/`;
 const cards = {
-  1: './src/cards/clubs/jack.png',
-  2: './src/cards/clubs/queen.png',
-  3: './src/cards/clubs/king.png',
-  4: './src/cards/clubs/ace.png',
-  5: './src/cards/clubs/6.png',
-  6: './src/cards/clubs/7.png',
-  7: './src/cards/clubs/8.png',
-  8: './src/cards/clubs/9.png',
-  9: './src/cards/clubs/10.png',
-  10: './src/cards/hearts/jack.png',
-  11: './src/cards/hearts/queen.png',
-  12: './src/cards/hearts/king.png',
-  13: './src/cards/hearts/ace.png',
-  14: './src/cards/hearts/6.png',
-  15: './src/cards/hearts/7.png',
-  16: './src/cards/hearts/8.png',
-  17: './src/cards/hearts/9.png',
-  18: './src/cards/hearts/10.png',
-  19: './src/cards/spades/king.png',
-  20: './src/cards/spades/ace.png',
-  21: './src/cards/spades/jack.png',
-  22: './src/cards/spades/queen.png',
-  23: './src/cards/spades/6.png',
-  24: './src/cards/spades/7.png',
-  25: './src/cards/spades/8.png',
-  26: './src/cards/spades/9.png',
-  27: './src/cards/spades/10.png',
-  28: './src/cards/diamonds/ace.png',
-  29: './src/cards/diamonds/jack.png',
-  30: './src/cards/diamonds/queen.png',
-  31: './src/cards/diamonds/king.png',
-  32: './src/cards/diamonds/6.png',
-  33: './src/cards/diamonds/7.png',
-  34: './src/cards/diamonds/8.png',
-  35: './src/cards/diamonds/9.png',
-  36: './src/cards/diamonds/10.png',
+  1: `${cardsSRC}/clubs/jack.png`,
+  2: `${cardsSRC}/clubs/queen.png`,
+  3: `${cardsSRC}/clubs/king.png`,
+  4: `${cardsSRC}/clubs/ace.png`,
+  5: `${cardsSRC}/clubs/6.png`,
+  6: `${cardsSRC}/clubs/7.png`,
+  7: `${cardsSRC}/clubs/8.png`,
+  8: `${cardsSRC}/clubs/9.png`,
+  9: `${cardsSRC}/clubs/10.png`,
+  10: `${cardsSRC}/hearts/jack.png`,
+  11: `${cardsSRC}/hearts/queen.png`,
+  12: `${cardsSRC}/hearts/king.png`,
+  13: `${cardsSRC}/hearts/ace.png`,
+  14: `${cardsSRC}/hearts/6.png`,
+  15: `${cardsSRC}/hearts/7.png`,
+  16: `${cardsSRC}/hearts/8.png`,
+  17: `${cardsSRC}/hearts/9.png`,
+  18: `${cardsSRC}/hearts/10.png`,
+  19: `${cardsSRC}/spades/king.png`,
+  20: `${cardsSRC}/spades/ace.png`,
+  21: `${cardsSRC}/spades/jack.png`,
+  22: `${cardsSRC}/spades/queen.png`,
+  23: `${cardsSRC}/spades/6.png`,
+  24: `${cardsSRC}/spades/7.png`,
+  25: `${cardsSRC}/spades/8.png`,
+  26: `${cardsSRC}/spades/9.png`,
+  27: `${cardsSRC}/spades/10.png`,
+  28: `${cardsSRC}/diamonds/ace.png`,
+  29: `${cardsSRC}/diamonds/jack.png`,
+  30: `${cardsSRC}/diamonds/queen.png`,
+  31: `${cardsSRC}/diamonds/king.png`,
+  32: `${cardsSRC}/diamonds/6.png`,
+  33: `${cardsSRC}/diamonds/7.png`,
+  34: `${cardsSRC}/diamonds/8.png`,
+  35: `${cardsSRC}/diamonds/9.png`,
+  36: `${cardsSRC}/diamonds/10.png`,
 };
 
 function mixingEasy() {
@@ -150,3 +128,82 @@ function randomNumber(min, max) {
 mixingEasy();
 mixingMedium();
 mixingHard();
+
+function gamePageLogic(className) {
+  const cardsRender = document.querySelector('.container-cards');
+  const currentSecondTimer = document.querySelector('.timer-sec');
+  const currentMinuteTimer = document.querySelector('.timer-min');
+  const btn = document.querySelector('.start-button');
+  cardsRender.classList.add(className);
+  app.classList.add('game-page-height');
+  setTimeout(mainGameLogic, 3000);
+  gameTimer(currentSecondTimer, currentMinuteTimer);
+  btn.addEventListener('click', (event) => {
+    document.location.reload();
+  });
+}
+function mainGameLogic() {
+  let count = 0;
+  let images = document.querySelectorAll('.img');
+  let currentDiff = images.length;
+  images.forEach((e) => {
+    let currentSrc = e.src;
+    e.src = `./src/cards/back-card.png`;
+    e.addEventListener('click', (event) => {
+      e.src = currentSrc;
+      count += 1;
+
+      if (matchCard === '') {
+        matchCard = e.src;
+        clearInterval(gameTimer.counting);
+      } else if (matchCard === e.src) {
+        matchCard = '';
+
+        if (count === currentDiff) {
+          stopTime();
+          toggle();
+          matchCard = '';
+          document.body.appendChild(templateEngine(templateWin));
+
+          const popUp = document.querySelector('.container');
+          const popBtn = document.querySelector('.pop-up-btn');
+          const popUpTimer = document.querySelector('.pop-up-timer');
+          const currentSecondTimer = document.querySelector('.timer-sec');
+          const currentMinuteTimer = document.querySelector('.timer-min');
+
+          popUp.classList.add('pop-up');
+          insertAfter(popUp, app);
+
+          popUpTimer.textContent =
+            currentMinuteTimer.textContent +
+            '.' +
+            currentSecondTimer.textContent;
+
+          popBtn.addEventListener('click', (event) => {
+            document.location.reload();
+          });
+        }
+      } else if (matchCard !== e.src) {
+        toggle();
+        stopTime();
+        matchCard = '';
+        document.body.appendChild(templateEngine(templateLose));
+
+        const popUp = document.querySelector('.container');
+        const popUpTimer = document.querySelector('.pop-up-timer');
+        const currentSecondTimer = document.querySelector('.timer-sec');
+        const currentMinuteTimer = document.querySelector('.timer-min');
+        const popBtn = document.querySelector('.pop-up-btn');
+
+        popUp.classList.add('pop-up');
+        popUpTimer.textContent =
+          currentMinuteTimer.textContent + '.' + currentSecondTimer.textContent;
+        insertAfter(popUp, app);
+
+        popBtn.addEventListener('click', (event) => {
+          document.location.reload();
+        });
+      }
+    });
+  });
+}
