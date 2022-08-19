@@ -35,7 +35,7 @@ startButton.addEventListener('click', (event) => {
     gamePageLogic(`hard-one`);
   } else {
     alert('Выберите сложность');
-    location.reload(true);
+    location.reload();
   }
 });
 function toggle() {
@@ -146,7 +146,7 @@ function mainGameLogic() {
   let count = 0;
   let images = document.querySelectorAll('.img');
   let currentDiff = images.length;
-  images.forEach((e) => {
+  images.forEach((e: HTMLImageElement) => {
     let currentSrc = e.src;
     e.src = `./src/cards/back-card.png`;
     e.addEventListener('click', (event) => {
@@ -155,10 +155,8 @@ function mainGameLogic() {
 
       if (matchCard === '') {
         matchCard = e.src;
-        clearInterval(gameTimer.counting);
       } else if (matchCard === e.src) {
         matchCard = '';
-
         if (count === currentDiff) {
           stopTime();
           toggle();
@@ -207,5 +205,3 @@ function mainGameLogic() {
     });
   });
 }
-
-// just a comment
