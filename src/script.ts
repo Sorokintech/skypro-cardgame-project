@@ -1,8 +1,8 @@
-const app = document.querySelector('.app');
+const app = document.querySelector('.app') as HTMLElement;
 app.appendChild(templateEngine(templateStartPage));
 const difficultyButtons = document.querySelectorAll('.difficulty-button');
-const startButton = document.querySelector('.start-button');
-let chosenDifficulty = '';
+const startButton = document.querySelector('.start-button') as HTMLElement;
+let chosenDifficulty: string | null = '';
 const difficultyContainer = document.querySelector('.difficulty-container');
 let currentCardsEasy = [];
 let currentCardsMedium = [];
@@ -45,8 +45,8 @@ function insertAfter(newNode, existingNode) {
   existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
 }
 let matchCard = '';
-const cardsSRC = `./src/cards/`;
-const cards = {
+const cardsSRC: string = `./src/cards/`;
+const cards: object = {
   1: `${cardsSRC}/clubs/jack.png`,
   2: `${cardsSRC}/clubs/queen.png`,
   3: `${cardsSRC}/clubs/king.png`,
@@ -163,11 +163,17 @@ function mainGameLogic() {
           matchCard = '';
           document.body.appendChild(templateEngine(templateWin));
 
-          const popUp = document.querySelector('.container');
-          const popBtn = document.querySelector('.pop-up-btn');
-          const popUpTimer = document.querySelector('.pop-up-timer');
-          const currentSecondTimer = document.querySelector('.timer-sec');
-          const currentMinuteTimer = document.querySelector('.timer-min');
+          const popUp = document.querySelector('.container') as HTMLElement;
+          const popBtn = document.querySelector('.pop-up-btn') as HTMLElement;
+          const popUpTimer = document.querySelector(
+            '.pop-up-timer'
+          ) as HTMLElement;
+          const currentSecondTimer = document.querySelector(
+            '.timer-sec'
+          ) as HTMLElement;
+          const currentMinuteTimer = document.querySelector(
+            '.timer-min'
+          ) as HTMLElement;
 
           popUp.classList.add('pop-up');
           insertAfter(popUp, app);
@@ -187,11 +193,17 @@ function mainGameLogic() {
         matchCard = '';
         document.body.appendChild(templateEngine(templateLose));
 
-        const popUp = document.querySelector('.container');
-        const popUpTimer = document.querySelector('.pop-up-timer');
-        const currentSecondTimer = document.querySelector('.timer-sec');
-        const currentMinuteTimer = document.querySelector('.timer-min');
-        const popBtn = document.querySelector('.pop-up-btn');
+        const popUp = document.querySelector('.container') as HTMLElement;
+        const popUpTimer = document.querySelector(
+          '.pop-up-timer'
+        ) as HTMLElement;
+        const currentSecondTimer = document.querySelector(
+          '.timer-sec'
+        ) as HTMLElement;
+        const currentMinuteTimer = document.querySelector(
+          '.timer-min'
+        ) as HTMLElement;
+        const popBtn = document.querySelector('.pop-up-btn') as HTMLElement;
 
         popUp.classList.add('pop-up');
         popUpTimer.textContent =
