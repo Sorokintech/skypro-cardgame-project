@@ -1,0 +1,40 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended", "prettier"],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2022
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "camelcase": ["error"],
+    "eqeqeq": ["error", "always"],
+    "no-unused-vars": "off"
+  },
+  "globals": {
+    "templateEngine": true,
+    "templateStartPage": true,
+    "templateEasyMode": true,
+    "templateMediumMode": true,
+    "templateHardMode": true,
+    "app": true,
+    "cards": true,
+    "randomNumber": true,
+    "currentCardsEasy": true,
+    "currentCardsMedium": true,
+    "currentCardsHard": true,
+    "templateLose": true,
+    "templateWin": true,
+    "templateAlert": true,
+    "gameTimer": true,
+    "timerZero": true,
+    "lol": true,
+    "timerGO": true,
+    "stopTime": true,
+    "countingTimer": true
+  }
+}
