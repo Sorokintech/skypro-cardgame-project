@@ -23,3 +23,4 @@ function gameTimer(second, minute) {
 function stopTime() {
   clearInterval(counting);
 }
+export { gameTimer, stopTime };

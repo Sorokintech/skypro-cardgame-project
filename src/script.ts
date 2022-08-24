@@ -1,13 +1,18 @@
+import * as render from './render';
+import templateEngine from './templateEngine';
+import templateStartPage from './startPage';
+import { gameTimer, stopTime } from './utilities';
+
+let currentCardsEasy = [];
+let currentCardsMedium = [];
+let currentCardsHard = [];
+
 const app = document.querySelector('.app') as HTMLElement;
 app.appendChild(templateEngine(templateStartPage));
 const difficultyButtons = document.querySelectorAll('.difficulty-button');
 const startButton = document.querySelector('.start-button') as HTMLElement;
 let chosenDifficulty: string | null = '';
 const difficultyContainer = document.querySelector('.difficulty-container');
-let currentCardsEasy = [];
-let currentCardsMedium = [];
-let currentCardsHard = [];
-
 difficultyButtons.forEach((button) => {
   button.addEventListener('click', (event) => {
     chosenDifficulty = button.textContent;
@@ -25,13 +30,13 @@ startButton.addEventListener('click', (event) => {
   app.classList.remove('center');
   app.textContent = '';
   if (chosenDifficulty === '1') {
-    app.appendChild(templateEngine(templateEasyMode));
+    app.appendChild(templateEngine(render.template(currentCardsEasy)));
     gamePageLogic(`easy-one`);
   } else if (chosenDifficulty === '2') {
-    app.appendChild(templateEngine(templateMediumMode));
+    app.appendChild(templateEngine(render.template(currentCardsMedium)));
     gamePageLogic(`easy-one`);
   } else if (chosenDifficulty === '3') {
-    app.appendChild(templateEngine(templateHardMode));
+    app.appendChild(templateEngine(render.template(currentCardsHard)));
     gamePageLogic(`hard-one`);
   } else {
     alert('Выберите сложность');
@@ -45,7 +50,7 @@ function insertAfter(newNode, existingNode) {
   existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
 }
 let matchCard = '';
-const cardsSRC: string = `./src/cards/`;
+const cardsSRC: string = `./dist/static/cards`;
 const cards: object = {
   1: `${cardsSRC}/clubs/jack.png`,
   2: `${cardsSRC}/clubs/queen.png`,
@@ -89,21 +94,21 @@ function mixingEasy() {
   for (let i = 0; i < 3; i++) {
     currentCardsEasy.push(cards[randomNumber(1, 36)]);
   }
-  currentCardsEasy = currentCardsEasy.concat(currentCardsEasy);
+  currentCardsEasy.push(...currentCardsEasy);
   shuffle(currentCardsEasy);
 }
 function mixingMedium() {
   for (let i = 0; i < 6; i++) {
     currentCardsMedium.push(cards[randomNumber(1, 36)]);
   }
-  currentCardsMedium = currentCardsMedium.concat(currentCardsMedium);
+  currentCardsMedium.push(...currentCardsMedium);
   shuffle(currentCardsMedium);
 }
 function mixingHard() {
   for (let i = 0; i < 9; i++) {
     currentCardsHard.push(cards[randomNumber(1, 36)]);
   }
-  currentCardsHard = currentCardsHard.concat(currentCardsHard);
+  currentCardsHard.push(...currentCardsHard);
   shuffle(currentCardsHard);
 }
 function shuffle(array) {
@@ -148,7 +153,8 @@ function mainGameLogic() {
   let currentDiff = images.length;
   images.forEach((e: HTMLImageElement) => {
     let currentSrc = e.src;
-    e.src = `./src/cards/back-card.png`;
+    console.log(currentSrc);
+    e.src = `./dist/static/cards/back-card.png`;
     e.addEventListener('click', (event) => {
       e.src = currentSrc;
       count += 1;
@@ -161,7 +167,7 @@ function mainGameLogic() {
           stopTime();
           toggle();
           matchCard = '';
-          document.body.appendChild(templateEngine(templateWin));
+          document.body.appendChild(templateEngine(render.templateWin));
 
           const popUp = document.querySelector('.container') as HTMLElement;
           const popBtn = document.querySelector('.pop-up-btn') as HTMLElement;
@@ -191,7 +197,7 @@ function mainGameLogic() {
         toggle();
         stopTime();
         matchCard = '';
-        document.body.appendChild(templateEngine(templateLose));
+        document.body.appendChild(templateEngine(render.templateLose));
 
         const popUp = document.querySelector('.container') as HTMLElement;
         const popUpTimer = document.querySelector(

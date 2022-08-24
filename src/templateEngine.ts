@@ -41,3 +41,5 @@ function templateEngine(block) {
 
   return element;
 }
+
+export default templateEngine;
