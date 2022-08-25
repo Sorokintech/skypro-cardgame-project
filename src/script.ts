@@ -1,13 +1,18 @@
+import * as render from './render';
+import templateEngine from './templateEngine';
+import templateStartPage from './startPage';
+import { gameTimer, stopTime } from './utilities';
+
+let currentCardsEasy = [];
+let currentCardsMedium = [];
+let currentCardsHard = [];
+
 const app = document.querySelector('.app') as HTMLElement;
 app.appendChild(templateEngine(templateStartPage));
 const difficultyButtons = document.querySelectorAll('.difficulty-button');
 const startButton = document.querySelector('.start-button') as HTMLElement;
 let chosenDifficulty: string | null = '';
 const difficultyContainer = document.querySelector('.difficulty-container');
-let currentCardsEasy = [];
-let currentCardsMedium = [];
-let currentCardsHard = [];
-
 difficultyButtons.forEach((button) => {
   button.addEventListener('click', (event) => {
     chosenDifficulty = button.textContent;
@@ -25,13 +30,13 @@ startButton.addEventListener('click', (event) => {
   app.classList.remove('center');
   app.textContent = '';
   if (chosenDifficulty === '1') {
-    app.appendChild(templateEngine(templateEasyMode));
+    app.appendChild(templateEngine(render.template(currentCardsEasy)));
     gamePageLogic(`easy-one`);
   } else if (chosenDifficulty === '2') {
-    app.appendChild(templateEngine(templateMediumMode));
+    app.appendChild(templateEngine(render.template(currentCardsMedium)));
     gamePageLogic(`easy-one`);
   } else if (chosenDifficulty === '3') {
-    app.appendChild(templateEngine(templateHardMode));
+    app.appendChild(templateEngine(render.template(currentCardsHard)));
     gamePageLogic(`hard-one`);
   } else {
     alert('Выберите сложность');
@@ -45,7 +50,7 @@ function insertAfter(newNode, existingNode) {
   existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
 }
 let matchCard = '';
-const cardsSRC: string = `./src/cards/`;
+const cardsSRC: string = `./static/cards`;
 const cards: object = {
   1: `${cardsSRC}/clubs/jack.png`,
   2: `${cardsSRC}/clubs/queen.png`,
@@ -89,21 +94,21 @@ function mixingEasy() {
   for (let i = 0; i < 3; i++) {
     currentCardsEasy.push(cards[randomNumber(1, 36)]);
   }
-  currentCardsEasy = currentCardsEasy.concat(currentCardsEasy);
+  currentCardsEasy.push(...currentCardsEasy);
   shuffle(currentCardsEasy);
 }
 function mixingMedium() {
   for (let i = 0; i < 6; i++) {
     currentCardsMedium.push(cards[randomNumber(1, 36)]);
   }
-  currentCardsMedium = currentCardsMedium.concat(currentCardsMedium);
+  currentCardsMedium.push(...currentCardsMedium);
   shuffle(currentCardsMedium);
 }
 function mixingHard() {
   for (let i = 0; i < 9; i++) {
     currentCardsHard.push(cards[randomNumber(1, 36)]);
   }
-  currentCardsHard = currentCardsHard.concat(currentCardsHard);
+  currentCardsHard.push(...currentCardsHard);
   shuffle(currentCardsHard);
 }
 function shuffle(array) {
@@ -131,40 +136,71 @@ mixingHard();
 
 function gamePageLogic(className) {
   const cardsRender = document.querySelector('.container-cards');
-  const currentSecondTimer = document.querySelector('.timer-sec');
-  const currentMinuteTimer = document.querySelector('.timer-min');
   const btn = document.querySelector('.start-button');
   cardsRender.classList.add(className);
   app.classList.add('game-page-height');
   setTimeout(mainGameLogic, 3000);
-  gameTimer(currentSecondTimer, currentMinuteTimer);
   btn.addEventListener('click', (event) => {
     document.location.reload();
   });
 }
 function mainGameLogic() {
+  const currentSecondTimer = document.querySelector('.timer-sec');
+  const currentMinuteTimer = document.querySelector('.timer-min');
+  gameTimer(currentSecondTimer, currentMinuteTimer);
   let count = 0;
   let images = document.querySelectorAll('.img');
   let currentDiff = images.length;
   images.forEach((e: HTMLImageElement) => {
     let currentSrc = e.src;
-    e.src = `./src/cards/back-card.png`;
+    e.classList.add('switch');
+    e.src = `./dist/static/cards/back-card.png`;
     e.addEventListener('click', (event) => {
-      e.src = currentSrc;
-      count += 1;
-
-      if (matchCard === '') {
-        matchCard = e.src;
-      } else if (matchCard === e.src) {
-        matchCard = '';
-        if (count === currentDiff) {
-          stopTime();
-          toggle();
+      if (e.classList.contains('switch')) {
+        e.classList.remove('switch');
+        e.src = currentSrc;
+        count += 1;
+        console.log(count);
+        if (matchCard === '') {
+          matchCard = e.src;
+        } else if (matchCard === e.src) {
           matchCard = '';
-          document.body.appendChild(templateEngine(templateWin));
+          if (count === currentDiff) {
+            stopTime();
+            toggle();
+            matchCard = '';
+            document.body.appendChild(templateEngine(render.templateWin));
+            const popUp = document.querySelector('.container') as HTMLElement;
+            const popBtn = document.querySelector('.pop-up-btn') as HTMLElement;
+            const popUpTimer = document.querySelector(
+              '.pop-up-timer'
+            ) as HTMLElement;
+            const currentSecondTimer = document.querySelector(
+              '.timer-sec'
+            ) as HTMLElement;
+            const currentMinuteTimer = document.querySelector(
+              '.timer-min'
+            ) as HTMLElement;
+
+            popUp.classList.add('pop-up');
+            insertAfter(popUp, app);
+
+            popUpTimer.textContent =
+              currentMinuteTimer.textContent +
+              '.' +
+              currentSecondTimer.textContent;
+
+            popBtn.addEventListener('click', (event) => {
+              document.location.reload();
+            });
+          }
+        } else if (matchCard !== e.src) {
+          toggle();
+          stopTime();
+          matchCard = '';
+          document.body.appendChild(templateEngine(render.templateLose));
 
           const popUp = document.querySelector('.container') as HTMLElement;
-          const popBtn = document.querySelector('.pop-up-btn') as HTMLElement;
           const popUpTimer = document.querySelector(
             '.pop-up-timer'
           ) as HTMLElement;
@@ -174,45 +210,19 @@ function mainGameLogic() {
           const currentMinuteTimer = document.querySelector(
             '.timer-min'
           ) as HTMLElement;
+          const popBtn = document.querySelector('.pop-up-btn') as HTMLElement;
 
           popUp.classList.add('pop-up');
-          insertAfter(popUp, app);
-
           popUpTimer.textContent =
             currentMinuteTimer.textContent +
             '.' +
             currentSecondTimer.textContent;
+          insertAfter(popUp, app);
 
           popBtn.addEventListener('click', (event) => {
             document.location.reload();
           });
         }
-      } else if (matchCard !== e.src) {
-        toggle();
-        stopTime();
-        matchCard = '';
-        document.body.appendChild(templateEngine(templateLose));
-
-        const popUp = document.querySelector('.container') as HTMLElement;
-        const popUpTimer = document.querySelector(
-          '.pop-up-timer'
-        ) as HTMLElement;
-        const currentSecondTimer = document.querySelector(
-          '.timer-sec'
-        ) as HTMLElement;
-        const currentMinuteTimer = document.querySelector(
-          '.timer-min'
-        ) as HTMLElement;
-        const popBtn = document.querySelector('.pop-up-btn') as HTMLElement;
-
-        popUp.classList.add('pop-up');
-        popUpTimer.textContent =
-          currentMinuteTimer.textContent + '.' + currentSecondTimer.textContent;
-        insertAfter(popUp, app);
-
-        popBtn.addEventListener('click', (event) => {
-          document.location.reload();
-        });
       }
     });
   });

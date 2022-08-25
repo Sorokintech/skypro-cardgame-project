@@ -1,5 +1,4 @@
 * {
-  /* font-family: StratosSkyeng; */
   font-style: normal;
   margin: 0;
   padding: 0;
@@ -13,8 +12,6 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-
-  /* flex-wrap: wrap; */
   justify-content: center;
   align-content: center;
   align-items: center;
@@ -25,8 +22,6 @@
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-
-  /* flex-wrap: nowrap; */
   align-content: center;
   justify-content: center;
   align-items: center;
@@ -35,8 +30,6 @@
 .container-header {
   padding: 50px 136px;
   width: 215px;
-
-  /* font-family: StratosSkyeng; */
   font-style: normal;
   font-weight: 400;
   font-size: 40px;
@@ -49,8 +42,6 @@
 .difficulty-container {
   display: flex;
   flex-direction: row;
-
-  /* flex-wrap: wrap; */
   justify-content: center;
   gap: 24px;
   padding: 0 69px;
@@ -58,8 +49,6 @@
 
 .difficulty-button {
   padding: 15px 34px;
-
-  /* font-family: StratosSkyeng; */
   font-style: normal;
   font-weight: 400;
   font-size: 64px;
@@ -90,8 +79,6 @@
   border-radius: 12px;
   border-style: none;
   border-color: #7ac100;
-
-  /* font-family: StratosSkyeng; */
   font-style: normal;
   font-weight: 400;
   font-size: 24px;

@@ -35,3 +35,5 @@ const templateStartPage = {
     },
   ],
 };
+
+export default templateStartPage;
