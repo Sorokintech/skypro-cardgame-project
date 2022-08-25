@@ -17,7 +17,7 @@ function gameTimer(second, minute) {
   };
   counting = setInterval(() => {
     timerGO();
-  }, 500);
+  }, 1000);
 }
 
 function stopTime() {
